@@ -3,6 +3,34 @@ from pygame_texteditor.TextEditor import TextEditor
 
 # minimal pygame setup
 pygame.init()
+
+# editor mouse cursor
+from pygame_texteditor.TextEditor import TextEditor
+
+cursor_data = [' .....          ',
+               '.XXXXX.         ',
+               '  .X.           ',
+               '  .X.           ',
+               '  .X.           ',
+               '  .X.           ',
+               '  .X.           ',
+               '  .X.           ',
+               '  .X.           ',
+               '  .X.           ',
+               '  .X.           ',
+               '  .X.           ',
+               '  .X.           ',
+               '  .X.           ',
+               '.XXXXX.         ',
+               ' .....          ',
+        ]
+
+xormasks, andmasks = pygame.cursors.compile(cursor_data, black="X", white=".", xor="o")
+size = (16, 16)
+hotspot = (0, 0)
+
+# pygame screen size
+
 screenHeight = 500
 screenWidth = 600
 screen = pygame.display.set_mode((screenWidth, screenHeight))
@@ -17,20 +45,24 @@ textAreaHeight = 400
 textAreaWidth = 500
 
 # instantiation
-TX = TextEditor(offset_X, offset_Y, textAreaWidth, textAreaHeight, screen)
+TX = TextEditor(offset_X, offset_Y, textAreaWidth, textAreaHeight, screen, style="bright")
 TX.set_cursor_mode("blinking")
 TX.set_line_numbers(True)
 TX.set_syntax_highlighting(True)
 TX.set_font_size(20)
 
 # TextEditor in the pygame-loop
-while True:
-    # INPUT - Mouse + Keyboard
-    pygame_events = pygame.event.get()
-    pressed_keys = pygame.key.get_pressed()
-    mouse_x, mouse_y = pygame.mouse.get_pos()
-    mouse_pressed = pygame.mouse.get_pressed()
+async def main():
+    while True:
+        # INPUT - Mouse + Keyboard
+        pygame_events = pygame.event.get()
+        pressed_keys = pygame.key.get_pressed()
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        mouse_pressed = pygame.mouse.get_pressed()
 
-    # displays editor functionality once per loop
-    TX.display_editor(pygame_events, pressed_keys, mouse_x, mouse_y, mouse_pressed)
-    pygame.display.flip()  # updates pygame window
+        # displays editor functionality once per loop
+        TX.display_editor(pygame_events, pressed_keys, mouse_x, mouse_y, mouse_pressed)
+        pygame.display.flip()  # updates pygame window
+        await asyncio.sleep(0)
+
+asyncio.run(main())
