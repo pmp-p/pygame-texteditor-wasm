@@ -7,23 +7,24 @@ pygame.init()
 # editor mouse cursor
 from pygame_texteditor.TextEditor import TextEditor
 
-cursor_data = [' .....          ',
-               '.XXXXX.         ',
-               '  .X.           ',
-               '  .X.           ',
-               '  .X.           ',
-               '  .X.           ',
-               '  .X.           ',
-               '  .X.           ',
-               '  .X.           ',
-               '  .X.           ',
-               '  .X.           ',
-               '  .X.           ',
-               '  .X.           ',
-               '  .X.           ',
-               '.XXXXX.         ',
-               ' .....          ',
-        ]
+cursor_data = [
+    " .....          ",
+    ".XXXXX.         ",
+    "  .X.           ",
+    "  .X.           ",
+    "  .X.           ",
+    "  .X.           ",
+    "  .X.           ",
+    "  .X.           ",
+    "  .X.           ",
+    "  .X.           ",
+    "  .X.           ",
+    "  .X.           ",
+    "  .X.           ",
+    "  .X.           ",
+    ".XXXXX.         ",
+    " .....          ",
+]
 
 xormasks, andmasks = pygame.cursors.compile(cursor_data, black="X", white=".", xor="o")
 size = (16, 16)
@@ -45,7 +46,9 @@ textAreaHeight = 400
 textAreaWidth = 500
 
 # instantiation
-TX = TextEditor(offset_X, offset_Y, textAreaWidth, textAreaHeight, screen, style="bright")
+TX = TextEditor(
+    offset_X, offset_Y, textAreaWidth, textAreaHeight, screen, style="bright"
+)
 TX.set_cursor_mode("blinking")
 TX.set_line_numbers(True)
 TX.set_syntax_highlighting(True)
@@ -64,5 +67,6 @@ async def main():
         TX.display_editor(pygame_events, pressed_keys, mouse_x, mouse_y, mouse_pressed)
         pygame.display.flip()  # updates pygame window
         await asyncio.sleep(0)
+
 
 asyncio.run(main())

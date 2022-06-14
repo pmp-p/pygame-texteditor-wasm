@@ -7,6 +7,9 @@ if sys.platform != "emscripten":
     except:
         pyperclip = None
 else:
+    pyperclip = None
+
+if pyperclip is None:
 
     class pyperclip:
         buffer = ""
