@@ -3,9 +3,6 @@ from pygments.lexers import PythonLexer
 from pygments.formatter import Formatter
 from pygments.token import Token, is_token_subtype
 from typing import List, Dict, Tuple
-import os
-import yaml
-import re
 
 
 class ColorFormatter:

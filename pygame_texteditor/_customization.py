@@ -2,7 +2,7 @@ import os
 import re
 import math
 import pathlib
-import yaml
+import json
 import pygame
 
 
@@ -61,47 +61,55 @@ def set_syntax_highlighting(self, b) -> None:
 def set_colorscheme_from_yaml(self, path_to_yaml) -> None:
     def get_rgb_by_key(dict, key):
         return tuple([int(x) for x in re.findall(r"(\d{1,3})", dict[key])])
+    color_dict = json.loads("""{
+            "codingBackgroundColor": "(40,41,35)",
+            "codingScrollBarBackgroundColor": "(50, 51, 45)",
+            "lineNumberBackgroundColor": "(70, 71, 71)",
+            "lineNumberColor": "(255, 255, 255)",
+            "textColor": "(255, 255, 255)",
+            "textColor_builtin": "(104, 216, 239)",
+            "textColor_comments": "(119, 115, 115)",
+            "textColor_function": "(166, 226, 43)",
+            "textColor_keywords": "(237, 36, 36)",
+            "textColor_normal": "(255, 255, 255)",
+            "textColor_operators": "(249, 36, 114)",
+            "textColor_quotes": "(231, 219, 116)"
+        }""")
 
     try:
-        with open(path_to_yaml) as file:
-            color_dict = yaml.load(file, Loader=yaml.FullLoader)
+        self.codingBackgroundColor = get_rgb_by_key(
+            color_dict, "codingBackgroundColor"
+        )
+        self.codingScrollBarBackgroundColor = get_rgb_by_key(
+            color_dict, "codingScrollBarBackgroundColor"
+        )
+        self.lineNumberColor = get_rgb_by_key(color_dict, "lineNumberColor")
+        self.lineNumberBackgroundColor = get_rgb_by_key(
+            color_dict, "lineNumberBackgroundColor"
+        )
+        self.textColor = get_rgb_by_key(color_dict, "textColor")
 
-            self.codingBackgroundColor = get_rgb_by_key(
-                color_dict, "codingBackgroundColor"
-            )
-            self.codingScrollBarBackgroundColor = get_rgb_by_key(
-                color_dict, "codingScrollBarBackgroundColor"
-            )
-            self.lineNumberColor = get_rgb_by_key(color_dict, "lineNumberColor")
-            self.lineNumberBackgroundColor = get_rgb_by_key(
-                color_dict, "lineNumberBackgroundColor"
-            )
-            self.textColor = get_rgb_by_key(color_dict, "textColor")
-
-            self.formatter.textColor_normal = get_rgb_by_key(
-                color_dict, "textColor_normal"
-            )
-            self.formatter.textColor_comments = get_rgb_by_key(
-                color_dict, "textColor_comments"
-            )
-            self.formatter.textColor_quotes = get_rgb_by_key(
-                color_dict, "textColor_quotes"
-            )
-            self.formatter.textColor_operators = get_rgb_by_key(
-                color_dict, "textColor_operators"
-            )
-            self.formatter.textColor_keywords = get_rgb_by_key(
-                color_dict, "textColor_keywords"
-            )
-            self.formatter.textColor_function = get_rgb_by_key(
-                color_dict, "textColor_function"
-            )
-            self.formatter.textColor_builtin = get_rgb_by_key(
-                color_dict, "textColor_builtin"
-            )
-
-    except FileNotFoundError:
-        raise FileNotFoundError("Could not find the style file '" + path_to_yaml + "'.")
+        self.formatter.textColor_normal = get_rgb_by_key(
+            color_dict, "textColor_normal"
+        )
+        self.formatter.textColor_comments = get_rgb_by_key(
+            color_dict, "textColor_comments"
+        )
+        self.formatter.textColor_quotes = get_rgb_by_key(
+            color_dict, "textColor_quotes"
+        )
+        self.formatter.textColor_operators = get_rgb_by_key(
+            color_dict, "textColor_operators"
+        )
+        self.formatter.textColor_keywords = get_rgb_by_key(
+            color_dict, "textColor_keywords"
+        )
+        self.formatter.textColor_function = get_rgb_by_key(
+            color_dict, "textColor_function"
+        )
+        self.formatter.textColor_builtin = get_rgb_by_key(
+            color_dict, "textColor_builtin"
+        )
     except KeyError as e:
         raise KeyError(
             "Could not find all necessary color-keys in the style file '"

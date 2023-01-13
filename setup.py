@@ -28,9 +28,7 @@ setup(
     author_email="cribbersix@gmail.com",
     install_requires=[
         "pygame>=1.9.6",
-        "pyyaml >= 5.3.1",
         "pygments >= 2.6.1",
-        "pyperclip >= 1.8.1",
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",

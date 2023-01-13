@@ -2,9 +2,6 @@ from pygments.lexers import PythonLexer
 import pygame
 import math
 import os
-import yaml
-import re
-
 from .ColorFormatter import ColorFormatter
 
 
